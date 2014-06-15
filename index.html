@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>JavaScript Classes and Inheritence - PRO Edition</title>
+
+		<meta name="description" content="A talk about JavaScript Classes and Inheritence">
+		<meta name="author" content="Marc Heiligers">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+
+		<style>
+		img.borderless {
+			box-shadow: none !important;
+			border: none !important;
+			background: none !important;
+		}
+		.dark {
+			color: #666 !important;
+		}
+		.dark-glow {
+			color: #666 !important;
+			text-shadow: 0px 0px 10px rgba(255, 255, 255, 1);
+		}
+		.code {
+			font-family: Consolas,monospace !important;
+			text-transform: none !important;
+			color: #18A5B1 !important;
+		}
+		.ace_cursor {
+			background-color: white !important;
+			opacity: 0.8;
+		}
+		.ace_fold-widget {
+			display: none !important;
+		}
+		code.editor {
+			position: relative;
+			display: block;
+			text-align: left !important;
+		}
+		.ace_gutter-cell {
+			text-align: right !important;
+			width: 45px !important;
+		}
+		.ace_info {
+			background: none !important;
+		}
+		.code-part-indicator {
+			background: #18A5B1;
+			color: #18A5B1;
+			border-radius: 24px;
+			display: inline-block;
+			font-family: monospace;
+			font-weight: bold;
+			font-size: 12px;
+			height: 24px;
+			line-height: 24px;
+			text-align: center;
+			text-decoration: none;
+			width: 0;
+			margin: 0 6px;
+			padding: 0 12px;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+		.code-part-indicator:hover {
+			color: white;
+			width: auto;
+		}
+		.code-parts-indicator {
+			position: absolute;
+			display: none;
+			bottom: 54px;
+			left: 18px;
+			z-index: 1000;
+		}
+		.language-indicator {
+			position: absolute;
+			display: none;
+			bottom: 54px;
+			left: 48%;
+			right: 48%;
+			text-align: center;
+			z-index: 1000;
+			background: transparent;
+			color: #999;
+			border-radius: 24px;
+		}
+		.object {
+			position: absolute;
+			top: 50px;
+		}
+		cite {
+			font-size: 0.5em !important;
+			position: relative;
+			top: 0.5em;
+			left: 2em;
+		}
+		cite::before {
+			content: '- ';
+		}
+		.readability {
+			background-color: rgba(0,0,0,.65);
+			padding: 0 0.3em !important;
+		}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h2>JavaScript Classes and Inheritence</h2>
+					<h1>PRO Edition</h1>
+					<p>
+						<small>Marc Heiligers &bull; <a href="https://twitter.com/marcheiligers">@marcheiligers</a></small>
+					</p>
+				</section>
+
+				<section>
+					<h2>Who Am I?</h2>
+						<code>marcheiligers</code>
+						on <a href='https://twitter.com/marcheiligers'>Twitter</a><!-- TODO: Replace with Twitter and Github images -->
+						and <a href='https://github.com/marcheiligers'>GitHub</a>
+					</p>
+ 				</section>
+
+				<section data-background='#84C3EC' data-transition="linear" data-background-transition="slide">
+					<h2>Chief of Technology @</h2>
+					<h1><img src='images/madmimi.png' class='borderless'></h1>
+				</section>
+
+				<!-- TODO: get this image local -->
+				<section data-background="http://rubyfuza.org/images/bg0.png" data-background-repeat="repeat" data-transition="linear" data-background-transition="slide">
+					<h2>Organizer of</h2>
+					<h1><img src='images/rubyfuza.png' class='borderless'></h1>
+				</section>
+
+				<!-- TODO: get this image local -->
+				<section data-background="https://www.ruby-lang.org/images/ruby_pattern@2X.png" data-background-repeat="repeat" data-background-size="412px">
+					<p class='dark'>a</p>
+					<h1>Ruby</h1>
+					<p class='dark'>guy</p>
+				</section>
+
+				<section data-background-color="white" data-background="images/ms-bg.png" data-background-repeat="repeat" data-background-size="780px">
+					<section>
+						<p><span class='readability'>but i have a</span></p>
+						<h1>Microsoft</h1>
+						<p><span class='readability'>background</span></p>
+					</section>
+
+					<section>
+						<h1>Thank-you</h1>
+						<p><span class="readability">for sponsoring this great venue</span></p>
+					</section>
+
+					<section>
+						<h1>Thank-you</h1>
+						<p><span class="readability">BBD, Entelect and Amazon Development Center</span></p>
+					</section>
+
+					<section>
+						<small class='readability'>
+							If you'd like to come to Port Elizabeth, maybe we can get something going there?
+						</small>
+					</section>
+
+					<section data-background="images/tv-bg.png">
+						<h2>Back to our regular<br>scheduled programming...</h2>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<img src='images/tv-www.png' class='borderless'>
+					</section>
+
+					<section>
+						<img src='images/commodore-64.jpg'>
+					</section>
+
+					<section>
+						<img src='images/Wizball-Spiel.gif'>
+					</section>
+
+					<section>
+						<img src='images/c64-prog.png'>
+					</section>
+
+					<section>
+						<div class='fragment'>Commodore 64 BASIC</div>
+						<div class='fragment'>Commodore 64 Assembly</div>
+						<div class='fragment'>GW BASIC</div>
+						<div class='fragment'>Turbo Pascal</div>
+						<div class='fragment'>Turbo C</div>
+						<div class='fragment'>Java</div>
+						<div class='fragment'>Classic ASP</div>
+						<div class='fragment'>Sun Spark Assembly</div>
+						<div class='fragment'>GNU and MS C++</div>
+					</section>
+				</section>
+
+				<section>
+					<h1>Classic ASP</h1>
+					<h3 class='code fragment'>&lt;%@ Language="JavaScript" %&gt;</h3>
+					<p class='fragment'>Server-side JavaScript in the 90's</p>
+				</section>
+
+				<section>
+					<section>
+						<h1>JavaScript</h1>
+						<p class='fragment'>Looked like C and Java</p>
+						<p class='fragment'>Ran in a browser</p>
+						<p class='fragment'>And on the server</p>
+						<p class='fragment'>Wasn't VB</p>
+					</section>
+
+					<section>
+						<p>Not here to talk about me</p>
+					</section>
+
+					<section>
+						<img src='images/JavaScript-logo.png' class='stretch'>
+					</section>
+				</section>
+
+				<section data-background='images/classical.jpg'>
+					<section>
+						<h1>What are classes?</h1>
+						<h3 class='fragment'>Or at least, what do we care about?</h3>
+						<img src='images/warning.png' class='fragment borderless'>
+						<p class='fragment readability'>When I lie to you, I'll mark it with a &dagger;</p>
+					</section>
+
+					<section>
+						<h1>We care about Classes that...</h1>
+						<ul>
+							<li class='fragment readability'>define reusable properties and methods</li>
+							<li class='fragment readability'>can inherit functionality from a superclass</li>
+							<li class='fragment readability'>can override functionality of their superclass</li>
+							<li class='fragment readability'>can call their superclass methods</li>
+							<li class='fragment readability'>are open (can be Monkey-patched)</li>
+						</ul>
+						<p class='fragment'><span class='readability'>(that last one, from a Rubyist perspective)</span></p>
+					</section>
+
+					<section>
+						<h1>JavaScript</h1>
+						<img src='images/no-entry.png' class='borderless'>
+						<p class='fragment readability'>
+							But it is possible to treat JavaScript "classes" very much like classical
+							classes while also taking advantage of some of the dynamic nature of JS.
+						</p>
+					</section>
+				</section>
+
+				<section data-background='images/Lego_Color_Bricks.jpg'>
+					<h1>Objects</h1>
+					<p>
+						<span class='readability'>Everything in JavaScript is an object&dagger;.</span>
+						<span class='readability fragment'>Strings are objects.</span>
+						<span class='readability fragment'>Numbers are objects.</span>
+						<span class='readability fragment'>Functions are objects.</span>
+						<span class='readability fragment'>And Objects are objects.</span>
+					</p>
+				</section>
+
+				<section data-background='images/map.jpg'>
+					<section>
+						<h1>Object Properties</h1>
+						<p class='fragment'><span class='readability'>Key &rarr; Value</span></p>
+						<ul>
+							<li class='readability fragment'>Keys are strings</li>
+							<li class='readability fragment'>Values can be anything:</li>
+							<ul>
+								<li class='readability fragment'>A number or a string or other type</li>
+								<li class='readability fragment'>Another object or array (which is an object)</li>
+								<li class='readability fragment'>Or a function (method)</li>
+							</ul>
+						</ul>
+					</section>
+
+					<section>
+						<h1>Inherited Object Properties</h1>
+						<ul>
+							<li class='readability'>All objects inherit from <span class='code'>Object</span>&dagger;</li>
+							<li class='fragment readability'><span class='code'>#toString</span></li>
+							<li class='fragment readability'><span class='code'>#valueOf</span></li>
+							<li class='fragment readability'>And a whole
+								<a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object'>
+									whack of other methods
+								</a>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+				<section>
+					<code id='11-objects.js' class='editor stretch'></code>
+				</section>
+
+				<section data-background='images/dna.jpg'>
+					<section>
+						<h1>Inheritance</h1>
+						<ul>
+							<li class='fragment readability'><span class='code'>__proto__&dagger;</span></li>
+							<li class='fragment readability'><span class='code'>[[prototype]]</span></li>
+							<li class='fragment readability'><span class='code'>Functions</span> are constructors</li>
+							<li class='fragment readability'><span class='code'>new Object()</span> is calling a function</li>
+							<li class='fragment readability'>with this special bit of syntactic sugar <span class='code'>new</span></li>
+						</ul>
+					</section>
+
+					<section>
+						<h1><span class='code'>new</span> Keyword</h1>
+						<ul>
+							<li class='fragment readability'>creates an <span class='code'>{}</span></li>
+							<li class='fragment readability'><span class='code'>{}.__proto__ = Constructor.[[prototype]]</span></li>
+							<li class='fragment readability'><span class='code'>Constructor.call({}, arguments)</span></li>
+							<li class='fragment readability'><span class='code'>return {}</span>&dagger;</li>
+						</ul>
+					</section>
+
+					<section>
+						<h1>Classes</h1>
+						<p class='fragment readability'>
+							<span class='code'>
+								Constructor.prototype.method =
+								<br>
+								&nbsp;&nbsp;function() { ... }
+							</span>
+						</p>
+						<p class='fragment readability'>Can also override methods</p>
+					</section>
+				</section>
+
+
+				<section>
+					<code id='14-animal.js' class='editor stretch'></code>
+				</section>
+
+				<section data-background='images/gmo.jpg'>
+					<h1>Monkey-patching</h1>
+					<ul>
+						<li class='fragment readability'><span class='code'>Constructor.prototype.<i>method</i> = function() {}</span></li>
+						<li class='fragment readability'><b>All</b> instances of the class will get the method</li>
+						<li class='fragment readability'>You can monkey-patch built in classes too</li>
+						<ul>
+							<li class='fragment readability'><strike class='code'>Object</strike></li>
+							<li class='fragment readability'><strike class='code'>HTMLElement</strike>, <strike class='code'>HTMLDivElement</strike>, ...</li>
+							<li class='fragment readability'>MooTools and Prototype</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section>
+					<code id='16-string.js' class='editor stretch'></code>
+				</section>
+
+				<section data-background='images/eye_colour.png'>
+					<h1>Inheritance</h1>
+					<ul>
+						<li class='fragment readability'><span class='code'>function Pig() {}</span></li>
+						<li class='fragment readability'><span class='code'>Pig.prototype = new Animal()</span></li>
+					</ul>
+				</section>
+
+				<section>
+					<code id='18-pig.js' class='editor stretch'></code>
+				</section>
+
+				<section data-background='images/holding-hands-aa.jpg'>
+					<h1>Super class methods</h1>
+					<p class='fragment'><span class='readability'>Functions are Objects</p>
+					<ul>
+						<li class='fragment readability'><span class='code'>Function#call</span></li>
+						<li class='fragment readability'><span class='code'>Function#apply</span></li>
+						<li class='fragment readability'><span class='code'>Super.prototype.method.call(this);</span></li>
+					</ul>
+					<p class='fragment'><span class='code readability'>Array.prototype.slice.call(arguments);</span></p>
+				</section>
+
+				<section>
+					<code id='20-pig.js' class='editor stretch'></code>
+				</section>
+
+				<section data-background-image='images/surveillance.jpeg'>
+					<section>
+						<h1>Privacy</h1>
+						<ul>
+							<li class='fragment readability'>Nothing is private</li>
+							<ul>
+								<li class='fragment readability code'>_<i>method</i></li>
+								<li class='fragment readability code'>__<i>method</i></li>
+								<li class='fragment readability code'>__<i>method</i>__</li>
+							</ul>
+						</ul>
+					</section>
+
+					<section>
+						<h1>IIFE</h1>
+						<ul>
+							<li class='fragment readability'>Immediately-Invoked Function Expression</li>
+							<ul>
+								<li class='fragment readability'>Pronounced <i>Iffy</i></li>
+								<li class='fragment readability'>Often incorrectly named <i>SIF</i></li>
+							</ul>
+							<li class='fragment readability'><span class='code'>(function(global, undefined) {})(this)</span></li>
+							<ul>
+								<li class='fragment readability'>Everything is private</li>
+								<li class='fragment readability'>Unless you make it public</li>
+							</ul>
+						</ul>
+					</section>
+
+					<section>
+						<h1>More uses for IIFEs</h1>
+						<ul>
+							<li class='fragment readability'>Pass more interesting things in</li>
+							<ul>
+								<li class='fragment readability'>Mixing up multiple libraries?</li>
+								<li class='fragment readability'><span class='code'>(function($) {})(jQuery)</span></li>
+							</ul>
+						</ul>
+					</section>
+
+					<section>
+						<h1>Gotcha</h1>
+						<p class='readability'>In strict mode, <span class='code'>this</span> is not coerced to the global object</p>
+					</section>
+				</section>
+
+
+				<section>
+					<code id='22-iife.js' class='editor stretch'></code>
+				</section>
+
+				<section data-background-image='images/factory.jpg'>
+					<section>
+						<h1>Functions</h1>
+						<ul>
+							<li class="fragment readability">First class</li>
+							<li class="fragment readability"><span class='code'>apply</span></li>
+							<li class="fragment readability"><span class='code'>call</span></li>
+							<li class="fragment readability"><span class='code'>bind</span></li>
+						</ul>
+					</section>
+
+					<section>
+						<h1>First Class Functions</h1>
+						<ul>
+							<li class="fragment readability">Pass functions as arguments</li>
+							<li class="fragment readability">Return functions from functions</li>
+							<li class="fragment readability">Assign them to variables or in data structures</li>
+							<li class="fragment readability">Have anonymous functions</li>
+						</ul>
+					</section>
+
+					<section>
+						<h1>Closures</h1>
+						<p class='fragment readability'>
+							A closure is a function that refers to an independant variable.
+						</p>
+						<p class='fragment readability'>
+							Eisbein IFFE <span class='code'>total</span> and <span class='code'>cook</span> referred to <span class='code'>count</span>.
+						</p>
+					</section>
+
+					<section>
+						<h1>Binding</h1>
+						<ul>
+							<li class="fragment readability"><span class='code'>bind</span></li>
+							<li class="fragment readability"><span class='code'>$el.on('click', this.onClick.bind(this))</span></li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<code id='24-functional.js' class='editor stretch'></code>
+				</section>
+
+				<section data-background-image='images/wooden-blocks.jpg'>
+					<p class='fragment readability'>
+						What if we could create a Class construct<br>
+						that would make all of this easier?
+					</p>
+				</section>
+
+				<section>
+					<code id='26-class.js' class='editor stretch'></code>
+				</section>
+
+				<section data-background-image='images/vinyard.jpg'>
+					<section>
+						<h1>Other options</h1>
+						<ul>
+							<li class='fragment readability'>CoffeeScript</li>
+							<li class='fragment readability'>TypeScript</li>
+							<li class='fragment readability'>ES6</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<code id='28-animal.coffee' class='editor stretch'></code>
+				</section>
+
+				<section>
+					<code id='29-animal.ts' class='editor stretch'></code>
+				</section>
+
+				<section>
+					<code id='30-animal.es6' class='editor stretch'></code>
+				</section>
+
+				<section>
+					<blockquote>
+						Are you using something like Traceur to transpile ES6?
+						Or using CoffeeScript or Typescript or something like that?
+					</blockquote>
+					<blockquote>
+						Nothing at all.
+						<cite>Juriy "kangax" Zaytsev</cite>
+					</blockquote>
+				</section>
+
+				<section>
+					<h1>The End</h1>
+					<img class='stretch' src='images/eisbein.jpg'>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+		<script data-main="js/livecoding/main" src="js/require.js"></script>
+
+
+	</body>
+</html>
